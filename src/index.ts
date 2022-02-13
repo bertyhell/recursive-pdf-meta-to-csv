@@ -26,21 +26,24 @@ async function getPdfInfos() {
 
 		let csvString = 'FilePath;FileType;FileSize;FileModifyDate;FileAccessDate;FilePermissions;PDFVersion;PageCount;Linearized;CreateDate;Creator;Producer\n';
 		for (let i = 0; i < files.length; i++) {
-
-			const filePath = files[i];
-			const info = await getPdfInfo(filePath);
-			csvString += '"' + filePath + '";"' +
-				info.FileType + '";"' +
-				info.FileSize + '";"' +
-				info.FileModifyDate + '";"' +
-				info.FileAccessDate + '";"' +
-				info.FilePermissions + '";"' +
-				info.PDFVersion + '";"' +
-				info.PageCount + '";"' +
-				info.Linearized + '";"' +
-				info.CreateDate + '";"' +
-				info.Creator + '";"' +
-				info.Producer + '"\n';
+			try {
+				const filePath = files[i];
+				const info = await getPdfInfo(filePath);
+				csvString += '"' + filePath + '";"' +
+					info.FileType + '";"' +
+					info.FileSize + '";"' +
+					info.FileModifyDate + '";"' +
+					info.FileAccessDate + '";"' +
+					info.FilePermissions + '";"' +
+					info.PDFVersion + '";"' +
+					info.PageCount + '";"' +
+					info.Linearized + '";"' +
+					info.CreateDate + '";"' +
+					info.Creator + '";"' +
+					info.Producer + '"\n';
+			} catch (err) {
+				console.error('Failed to get metadata for file: ' + files[i], JSON.stringify(err));
+			}
 		}
 
 		const dateFileName =new Date().toISOString().replace(/:/g, '-').replace('T', '_').replace('Z', '').split('.')[0];
