@@ -2,6 +2,8 @@ import * as fs from 'fs/promises';
 import * as path from 'path';
 import { promisify } from 'util';
 import glob from "glob-promise";
+const promptSync = require("prompt-sync");
+const prompt = promptSync();
 
 async function getPdfInfo(file: string): Promise<Record<string, string>> {
 	const exec = promisify(require('child_process').exec);
@@ -18,7 +20,6 @@ async function getPdfInfo(file: string): Promise<Record<string, string>> {
 
 async function getPdfInfos() {
 	try {
-		const prompt = require("prompt-sync")();
 		const pdfsDir = prompt("Enter pdf folder path. eg: C:\\Users\\Me\\Documents\\my-pdfs  : ");
 
 		const files = await glob(path.join(pdfsDir, '**/*.pdf'));
