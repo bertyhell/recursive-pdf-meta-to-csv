@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "bundle": "rm -rf ./pdf-meta-data-extractor.exe && caxa --input \".\" --output \"pdf-meta-data-extractor.exe\" -- \"{{caxa}}/node_modules/.bin/ts-node\" \"{{caxa}}/src/index.ts\""
+    "bundle": "rm -rf ./pdf-meta-data-extractor.exe && caxa --input \".\" --output \"pdf-meta-data-extractor.exe\" --exclude .git .idea -- \"{{caxa}}/node_modules/.bin/ts-node\" \"{{caxa}}/src/index.ts\""
   },
   "author": "",
   "license": "ISC",

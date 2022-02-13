@@ -24,12 +24,16 @@ async function getPdfInfos() {
 
 		const files = await glob(path.join(pdfsDir, '**/*.pdf'));
 
-		let csvString = 'FilePath;FileType;FileSize;FileModifyDate;FileAccessDate;FilePermissions;PDFVersion;PageCount;Linearized;CreateDate;Creator;Producer\n';
+		let csvString = 'FilePath;FileName;FileType;FileSize;FileModifyDate;FileAccessDate;FilePermissions;PDFVersion;PageCount;Linearized;CreateDate;Creator;Producer\n';
 		for (let i = 0; i < files.length; i++) {
 			try {
 				const filePath = files[i];
+				const fileName = path.basename(filePath);
+				const ext = path.extname(filePath);
+				const fileNameWithoutExt = path.basename(fileName, ext);
 				const info = await getPdfInfo(filePath);
 				csvString += '"' + filePath + '";"' +
+					fileNameWithoutExt + '";"' +
 					info.FileType + '";"' +
 					info.FileSize + '";"' +
 					info.FileModifyDate + '";"' +
